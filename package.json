@@ -1,0 +1,42 @@
+{
+  "name": "hausarbeit",
+  "version": "1.0.0",
+  "description": "Hausarbeit SS 17 von Jens Adrian Krause und Florian Reitz",
+  "main": "index.js",
+  "author": "Jens Adrian Krause (krauseje@hochschule-trier.de) und Florian Reitz (reitzf@hochschule-trier.de)",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "fav": "cp \"./src/assets/favicon.ico\" \"./dist/\"",
+    "html": "cp \"./src/index.html\" \"./dist/\"",
+    "min-html": "npm run html && place \"./dist/index.html\" style.css style.min.css && place \"./dist/index.html\" index.js index.min.js",
+    "css": "lessc \"./src/css/style.less\" \"./dist/css/style.css\"",
+    "min-css": "lessc -clean-css \"./src/css/style.less\" \"./dist/css/style.min.css\"",
+    "js": "browserify \"./src/js/Index.js\" > \"./dist/js/index.js\"",
+    "min-js": "browserify \"./src/js/Index.js\" > \"./dist/js/index.js\" && babili \"./dist/js/index.js\" > \"./dist/js/index.min.js\" && rm \"./dist/js/index.js\"",
+    "lint": "eslint -c .eslintrc.json \"./src/js/**\" && eslint -c .eslintrc.json \"./Server.js\" && eslint -c .eslintrc.json \"./Geoobjects.js\"",
+    "create-folders": "mkdir \"./dist/\" && mkdir \"./dist/css/\" && mkdir \"./dist/js/\"",
+    "build": "npm run clean && npm install && npm run create-folders && npm run lint && npm run min-html && npm run fav && npm run min-css && npm run min-js",
+    "debug": "npm run clean:dist && npm run create-folders && npm run lint && npm run html && npm run fav && npm run css && npm run js",
+    "start": "node \"./Server.js\" -p 8080",
+    "clean:dist": "rm -rf \"./dist/\"",
+    "clean": "npm run clean:dist && rm -rf \"./node_modules/\""
+  },
+  "dependencies": {
+    "google-maps-api": "^2.0.1",
+    "file-system": "^2.2.2",
+    "express": "latest",
+    "jquery": "^3.2.1",
+    "body-parser": "^1.17.2",
+    "bulma": "^0.4.4",
+    "command-line-args": "^4.0.6"
+  },
+  "devDependencies": {
+    "babili": "^0.1.4",
+    "browserify": "latest",
+    "eslint": "^4.3.0",
+    "less": "latest",
+    "less-plugin-clean-css": "^1.5.1",
+    "place": "^1.2.1"
+  }
+}
